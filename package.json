@@ -1,0 +1,27 @@
+{
+  "name": "research",
+  "version": "1.0.0",
+  "description": "Plugin for redisearch, so the response will readable ",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test --search={keyword}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hualoqueros/research.git"
+  },
+  "keywords": [
+    "redisearchjs",
+    "redisearchwrapper",
+    "redisearchreadable"
+  ],
+  "author": "samudra.arenza@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hualoqueros/research/issues"
+  },
+  "homepage": "https://github.com/hualoqueros/research#readme",
+  "dependencies": {
+    "redis": "^2.8.0"
+  }
+}
