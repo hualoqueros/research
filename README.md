@@ -8,5 +8,5 @@ This is plugin for redisearch javascript that will reformat response become read
 # installation
 
 ```sh
-$ npm i maskinc
+$ npm i researchjs
 ```
