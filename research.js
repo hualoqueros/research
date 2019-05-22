@@ -2,7 +2,7 @@ let redis = require("redis")
 
 'use strict'
 
-class Research {
+class Researchjs {
     /**
      * 
      * @param {Object} rediConnection {host, port}
@@ -106,4 +106,4 @@ class Research {
     }
 }
 
-module.exports = Research
+module.exports = Researchjs
