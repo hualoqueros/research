@@ -10,7 +10,7 @@ class Researchjs {
      */
     constructor(rediConnection, opts) {
         this.db = redis.createClient(rediConnection)
-        this.withScores = opts.withScores!=undefined ? opts.withScores : false
+        this.withScores = true
         this.highlight  = opts.highlight!=undefined ? opts.highlight : false
     }
 
