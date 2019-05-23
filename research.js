@@ -8,9 +8,10 @@ class Researchjs {
      * @param {Object} rediConnection {host, port}
      * @param {Boolean} withScores 
      */
-    constructor(rediConnection, withScores = true) {
+    constructor(rediConnection, opts) {
         this.db = redis.createClient(rediConnection)
-        this.withScores = withScores
+        this.withScores = opts.withScores!=undefined ? opts.withScores : false
+        this.highlight  = opts.highlight!=undefined ? opts.highlight : false
     }
 
     /**
@@ -31,6 +32,7 @@ class Researchjs {
                 }
                 
                 if (this.withScores) q.push('WITHSCORES')
+                if (this.highlight) q.push('HIGHLIGHT')
                 
                 console.time("EXECUTION TIME")
                 this.db.send_command('FT.SEARCH',q, (err, reply) => {
