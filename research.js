@@ -1,4 +1,5 @@
 let redis = require("redis")
+let _ = require("lodash")
 
 'use strict'
 
@@ -47,7 +48,7 @@ class Researchjs {
         
                     // We need chunk an array, so this will readable for user
                     let chuckSize = this.withScores ? 3 : 2
-                    var dataDetail = this.chunk(reply, chuckSize)
+                    var dataDetail = _.chunk(reply, chuckSize)
                     data = this.parseData(dataDetail)
                     console.timeEnd("EXECUTION TIME")
                     return resolve({total, data, err})
@@ -58,19 +59,6 @@ class Researchjs {
             }
             
         })
-    }
-    
-    /**
-     * Chunk the array become a couple array
-     * @param {*} array 
-     * @param {*} chunkSize 
-     */
-    chunk(array,chunkSize) {
-        return [].concat.apply([],
-            array.map(function(elem,i) {
-                return i%chunkSize ? [] : [array.slice(i,i+chunkSize)];
-            })
-        );
     }
 
     /**
@@ -83,7 +71,6 @@ class Researchjs {
         return [].concat.apply([],
             array.map(function(elem,i) {
                 var dt = elem[2]
-                // console.log("SPESIFIC DATA",dt)
                 var newArray = new Array()
                 var newRecord = {}
                 newRecord["id"] = elem[0]
@@ -91,16 +78,11 @@ class Researchjs {
                 for (i in dt){
                     if (i%2===0) {
                         var k = dt[i]
-                        // console.log("POINTER ID",i)
-                        // console.log("POINTER",k)
-                        // console.log("GET POINTER",parseInt(i)+1)
-                        // console.log("VALUE POINTER",dt[ parseInt(i) + 1 ])
                         newRecord[ k ] = dt[ parseInt(i) + 1 ]
                         newArray = newRecord
                         
                     }
                 }
-                // console.log("newArray",newArray)
                 return [ newArray ]
                 
             })

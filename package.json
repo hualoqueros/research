@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/hualoqueros/research#readme",
   "dependencies": {
+    "lodash": "^4.17.11",
     "redis": "^2.8.0"
   }
 }
