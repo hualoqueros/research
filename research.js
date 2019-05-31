@@ -61,6 +61,18 @@ class Researchjs {
         })
     }
 
+    add(newRecord){
+        return new Promise( (resolve, reject) => {
+            this.db.send_command('FT.ADD',newRecord, (err, reply) => {
+                if (err) {
+                    return reject(err)
+                }else{
+                    return resolve(newRecord)
+                }
+            })
+        } )
+    }
+
     /**
      * Parse Data from redisearch 
      * so it will readable
