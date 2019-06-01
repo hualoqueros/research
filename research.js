@@ -22,7 +22,7 @@ class Researchjs {
      * @return {Promise} 
      */
     search( key, query ) {
-        var total, data, err = null
+        var totalRS, dataRS, errRS = null
         return new Promise( (resolve, reject) => {
             try {
                 console.log("======= SEARCHING DOCUMENT=======")
@@ -33,7 +33,7 @@ class Researchjs {
                 }
                 
                 if (this.withScores) q.push('WITHSCORES')
-                if (this.highlight) q.push('HIGHLIGHT')
+                if (this.highlight) q.push('HIGHLIGHT','TAGS','<span style="background:yellow">','</span>')
                 
                 console.time("EXECUTION TIME")
                 this.db.send_command('FT.SEARCH',q, (err, reply) => {
@@ -42,20 +42,20 @@ class Researchjs {
                         return reject(err)
                     }
                     // Keep total record into new variable
-                    total = reply[0]
+                    totalRS = reply[0]
                     
                     reply.shift() 
         
                     // We need chunk an array, so this will readable for user
                     let chuckSize = this.withScores ? 3 : 2
                     var dataDetail = _.chunk(reply, chuckSize)
-                    data = this.parseData(dataDetail)
+                    dataRS = this.parseData(dataDetail)
                     console.timeEnd("EXECUTION TIME")
-                    return resolve({total, data, err})
+                    return resolve({totalRS, dataRS, errRS})
 
                 })
             }catch(err){
-                resolve({total, data, err})
+                resolve({totalRS, dataRS, errRS})
             }
             
         })
