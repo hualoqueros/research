@@ -16,6 +16,59 @@ class Researchjs {
     }
 
     /**
+     * Check Index is Available or Not 
+     * @param {String} indexName 
+     * @return {Promise}
+     */
+    indexIsAvailable( indexName ) {
+        console.info("== CHECKING INDEX ==")
+        return new Promise( (resolve, reject) => {
+            this.db.send_command('FT.INFO',[indexName], (err, reply) => {
+                if (err) {
+                    return resolve(false)
+                }
+                return resolve(true)
+            })
+        })
+    }
+
+    /**
+     * 
+     * @param {String} indexName 
+     * @param {Object} schemas 
+     */
+    createIndex( indexName, schemas ) {
+        return new Promise( async (resolve, reject) => {
+            try{
+                var isAvailable = await this.indexIsAvailable(indexName)
+                if (isAvailable){
+                    return reject("Index is already exists")
+                }
+
+                var sch             = [indexName, 'SCHEMA']
+
+                schemas.forEach( (schema) =>{
+                    sch.push(schema.field)
+                    schema.attributes.forEach( (attr) => {
+                        sch.push(attr)
+                    })
+                    
+                })
+                
+                this.db.send_command('FT.CREATE',sch, (err, reply) => {
+                    if (err) {
+                        return reject(err)
+                    }
+                    return resolve(true)
+                })
+            }catch(err){
+                return reject(err)
+            }
+            
+        })
+    }
+
+    /**
      * Search into Redisearch
      * @param {String} key 
      * @param {Array} query
