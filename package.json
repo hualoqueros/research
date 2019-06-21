@@ -1,6 +1,6 @@
 {
   "name": "researchjs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Plugin for redisearch, so the response will readable ",
   "main": "index.js",
   "scripts": {
